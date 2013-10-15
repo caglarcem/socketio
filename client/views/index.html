@@ -1,0 +1,22 @@
+<html>
+<head>
+    <title>socketio example</title>
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.1.5/angular.min.js"></script>
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/socket.io/0.9.16/socket.io.min.js"></script>
+    <script type="text/javascript" src="/scripts/app.js"></script>
+    <script type="text/javascript" src="/scripts/timerCtrl.js"></script>
+    <script type="text/javascript" src="/scripts/socket.js"></script>
+    <title></title>
+</head>
+<body ng-app="socketioApp">
+    <h1>socketio Example</h1>
+    <div id='dv-timer' ng-controller='timerCtrl'>
+        <input type="button" ng-click="start()" value="Start" />
+        <p>Timer: <span>{{time}}</span></p>
+        <form action="#">
+            <p>Data: <input type="text" ng-model="inputdata" /></p>
+            <input type="button" ng-click="submit()" value="submit" />
+        </form>
+    </div>
+</body>
+</html>
