@@ -9,10 +9,27 @@
 'use strict';
 
 app.controller('timerCtrl', function ($scope, Socket) {
+    $scope.timerStarted = false;
+    $scope.completed = false;
+
     $scope.start = function(){
-        Socket.on("timer", function(data){
-            $scope.time = data;
-        });
+        $scope.timerStarted = true;
+        Socket.emit('start');
+    }
+
+    Socket.on("increment", function(data){
+        $scope.time = data;
+    });
+
+
+    $scope.stop = function(){
+        $scope.completed = true;
+        Socket.emit('stop');
+    }
+
+    $scope.pause = function(){
+        $scope.timerStarted = false;
+        Socket.emit('pause');
     }
 
     $scope.submit = function(){

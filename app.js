@@ -41,14 +41,26 @@ var io = socketio.listen(server);
 
 io.sockets.on('connection', function(socket){
     var counter = 0;
-    setInterval(function(){
-        ++counter;
-        console.log('Emitted: ' + counter);
-        socket.emit('timer', counter);
-    }, 988);
+    var timer;
+
+    socket.on('start', function(){
+        timer = setInterval(function(){
+            ++counter;
+            console.log('Emitted: ' + counter);
+            socket.emit('increment', counter);
+        }, 988);
+    });
 
     socket.on('submit', function(data){
         console.log('Submitted: ' + data);
+    });
+
+    socket.on('pause', function(){
+        clearInterval(timer);
+    });
+
+    socket.on('stop', function(){
+        clearInterval(timer);
     });
 });
 

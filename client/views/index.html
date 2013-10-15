@@ -11,7 +11,9 @@
 <body ng-app="socketioApp">
     <h1>socketio Example</h1>
     <div id='dv-timer' ng-controller='timerCtrl'>
-        <input type="button" ng-click="start()" value="Start" />
+        <input type="button" ng-click="start()" value="Start" ng-disabled="timerStarted || completed" />
+        <input type="button" ng-click="stop()" value="Stop" ng-disabled="!timerStarted || completed" />
+        <input type="button" ng-click="pause()" value="Pause" ng-disabled="!timerStarted || completed" />
         <p>Timer: <span>{{time}}</span></p>
         <form action="#">
             <p>Data: <input type="text" ng-model="inputdata" /></p>
