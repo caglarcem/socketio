@@ -43,6 +43,7 @@ io.sockets.on('connection', function(socket){
     var counter = 0;
     var timer;
 
+    // on start, increment timer every second. 12 ms is average rtt thus subtracted.
     socket.on('start', function(){
         timer = setInterval(function(){
             ++counter;
