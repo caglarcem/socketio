@@ -9,7 +9,7 @@ var routes = require('./routes');
 var user = require('./routes/user');
 var http = require('http');
 var path = require('path');
-
+var socketHandler = require('./socketHandler');
 
 var app = express();
 
@@ -39,31 +39,7 @@ var server = http.createServer(app);
 
 var io = socketio.listen(server);
 
-io.sockets.on('connection', function(socket){
-    var counter = 0;
-    var timer;
-
-    // on start, increment timer every second. 12 ms is average rtt thus subtracted.
-    socket.on('start', function(){
-        timer = setInterval(function(){
-            ++counter;
-            console.log('Emitted: ' + counter);
-            socket.emit('increment', counter);
-        }, 988);
-    });
-
-    socket.on('submit', function(data){
-        console.log('Submitted: ' + data);
-    });
-
-    socket.on('pause', function(){
-        clearInterval(timer);
-    });
-
-    socket.on('stop', function(){
-        clearInterval(timer);
-    });
-});
+io.sockets.on('connection', socketHandler.handle);
 
 server.listen(app.get('port'), function(){
     console.log('Express server listening on port ' + app.get('port'));
